@@ -1,0 +1,40 @@
+# GH actions.
+name: Build Docker for CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Build:
+    strategy:
+      matrix:
+        platform:
+          - cpu
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Reclaim disk space
+      run: |
+        df -h
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /opt/hostedtoolcache/CodeQL
+        sudo rm -rf /usr/local/.ghcup
+        df -h
+    - uses: actions/checkout@v3
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.MLCAI_DOCKERHUB_USERNAME }}
+        password: ${{ secrets.MLCAI_DOCKERHUB_TOKEN }}
+    - name: Build Docker image
+      run: |
+        set -eux
+        cd docker
+        docker build -t ci-${{ matrix.platform }} -f Dockerfile.ci-${{ matrix.platform }} .
+    - name: Upload to Docker Hub
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: |
+        set -eux
+        NEW_TAG=$(git log -1 --format='%h')
+        docker tag ci-${{ matrix.platform }} mlcaidev/ci-${{ matrix.platform }}:$NEW_TAG
+        docker push mlcaidev/ci-${{ matrix.platform }}:$NEW_TAG
