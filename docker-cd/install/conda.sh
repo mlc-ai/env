@@ -11,7 +11,6 @@ conda update --yes -n base -c defaults conda
 conda install -n base conda-libmamba-solver
 conda config --set solver libmamba
 conda upgrade --all
-conda clean -ya
 conda install conda-build conda-verify
 
 conda env create -y -n py37 -f /install/conda/cd-py37.yml
@@ -20,3 +19,4 @@ conda env create -y -n py39 -f /install/conda/cd-py39.yml
 conda env create -y -n py310 -f /install/conda/cd-py310.yml
 conda env create -y -n py311 -f /install/conda/cd-py311.yml
 conda env create -y -n py312 -f /install/conda/cd-py312.yml
+conda clean --yes --all
