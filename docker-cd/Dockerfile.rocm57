@@ -1,0 +1,7 @@
+# syntax = edrevo/dockerfile-plus
+FROM quay.io/pypa/manylinux_2_28_x86_64
+INCLUDE+ Dockerfile.base
+
+# Install ROCm 5.7
+COPY install/rocm.sh /install/rocm.sh
+RUN bash /install/rocm.sh "5.7"

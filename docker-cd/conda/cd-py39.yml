@@ -1,0 +1,22 @@
+name: cd-py39
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - six
+  - numpy
+  - pytest
+  - cython
+  - decorator
+  - scipy
+  - tornado
+  - mypy
+  - attrs
+  - requests
+  - Pillow
+  - packaging
+  - junitparser
+  - cloudpickle
+  - pip
+  - pip:
+      - xgboost==1.5

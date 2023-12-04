@@ -18,3 +18,4 @@ dependencies:
 - scipy
 - tornado
 - pytest
+- types-requests
