@@ -1,0 +1,12 @@
+FROM ubuntu:22.04
+
+RUN grep -v '[ -z "\$PS1" ] && return' ~/.bashrc >/tmp/bashrc && mv /tmp/bashrc ~/.bashrc
+
+COPY install/core.sh /install/core.sh
+RUN bash /install/core.sh
+
+ENV MAMBA_EXE=/root/bin/micromamba
+ENV MAMBA_ROOT_PREFIX=/root/micromamba
+COPY install/conda.sh /install/conda.sh
+COPY conda/ci-lint.yml /conda/ci-lint.yml
+RUN bash /install/conda.sh

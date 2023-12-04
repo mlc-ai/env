@@ -1,0 +1,10 @@
+# syntax = edrevo/dockerfile-plus
+FROM quay.io/pypa/manylinux_2_28_x86_64
+INCLUDE+ Dockerfile.base
+
+# Install CUDA 12.2
+COPY install/cuda.sh /install/cuda.sh
+RUN bash /install/cuda.sh "cuda-12-2" "cuda12.2"
+ENV CUDA_HOME=/usr/local/cuda
+ENV PATH=${CUDA_HOME}/bin:${PATH}
+ENV LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${PATH}
