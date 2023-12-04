@@ -23,40 +23,41 @@ jobs:
     - name: Docker CPU
       run: |
         cd docker-cd
-        docker build -t package-cpu -f Dockerfile.cpu .
+        docker build --rm -t package-cpu -f Dockerfile.cpu .
+        bash scripts/docker-push.sh "cpu"
     - name: Docker CUDA 11.7
       run: |
         cd docker-cd
-        docker build --build-arg CUDA_NAME_PGK="cuda-11-7" --build-arg CUDA_NAME_TXT="cuda11.7" -t package-cu117 -f Dockerfile.cuda .
+        docker build --rm --build-arg CUDA_NAME_PGK="cuda-11-7" --build-arg CUDA_NAME_TXT="cuda11.7" -t package-cu117 -f Dockerfile.cuda .
+        bash scripts/docker-push.sh "cu117"
+        docker rmi package-cu117
     - name: Docker CUDA 11.8
       run: |
         cd docker-cd
-        docker build --build-arg CUDA_NAME_PGK="cuda-11-8" --build-arg CUDA_NAME_TXT="cuda11.8" -t package-cu118 -f Dockerfile.cuda .
+        docker build --rm --build-arg CUDA_NAME_PGK="cuda-11-8" --build-arg CUDA_NAME_TXT="cuda11.8" -t package-cu118 -f Dockerfile.cuda .
+        bash scripts/docker-push.sh "cu118"
+        docker rmi package-cu118
     - name: Docker CUDA 12.1
       run: |
         cd docker-cd
-        docker build --build-arg CUDA_NAME_PGK="cuda-12-1" --build-arg CUDA_NAME_TXT="cuda12.1" -t package-cu121 -f Dockerfile.cuda .
+        docker build --rm --build-arg CUDA_NAME_PGK="cuda-12-1" --build-arg CUDA_NAME_TXT="cuda12.1" -t package-cu121 -f Dockerfile.cuda .
+        bash scripts/docker-push.sh "cu121"
+        docker rmi package-cu121
     - name: Docker CUDA 12.2
       run: |
         cd docker-cd
-        docker build --build-arg CUDA_NAME_PGK="cuda-12-2" --build-arg CUDA_NAME_TXT="cuda12.2" -t package-cu122 -f Dockerfile.cuda .
+        docker build --rm --build-arg CUDA_NAME_PGK="cuda-12-2" --build-arg CUDA_NAME_TXT="cuda12.2" -t package-cu122 -f Dockerfile.cuda .
+        bash scripts/docker-push.sh "cu122"
+        docker rmi package-cu122
     - name: Docker ROCm 5.6
       run: |
         cd docker-cd
-        docker build --build-arg ROCM_VER="5.6" -t package-rocm56 -f Dockerfile.rocm .
+        docker build --rm --build-arg ROCM_VER="5.6" -t package-rocm56 -f Dockerfile.rocm .
+        bash scripts/docker-push.sh "rocm56"
+        docker rmi package-rocm56
     - name: Docker ROCm 5.7
       run: |
         cd docker-cd
-        docker build --build-arg ROCM_VER="5.7" -t package-rocm57 -f Dockerfile.rocm .
-    - name: Upload to Docker Hub
-      run: |
-        set -eux
-        TAG=$(git log -1 --format='%h')
-        cd docker-cd
-        bash scripts/docker-push.sh $TAG "cpu"
-        bash scripts/docker-push.sh $TAG "cu117"
-        bash scripts/docker-push.sh $TAG "cu118"
-        bash scripts/docker-push.sh $TAG "cu121"
-        bash scripts/docker-push.sh $TAG "cu122"
-        bash scripts/docker-push.sh $TAG "rocm56"
-        bash scripts/docker-push.sh $TAG "rocm57"
+        docker build --rm --build-arg ROCM_VER="5.7" -t package-rocm57 -f Dockerfile.rocm .
+        bash scripts/docker-push.sh "rocm57"
+        docker rmi package-rocm57
