@@ -1,0 +1,9 @@
+# Install core
+COPY install/core.sh /install/core.sh
+RUN bash /install/core.sh
+
+# Install Conda
+ENV PATH=/opt/conda/bin:${PATH}
+COPY install/conda.sh /install/conda.sh
+ADD conda/ /install/conda/
+RUN bash /install/conda.sh

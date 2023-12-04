@@ -1,0 +1,20 @@
+name: ci-unittest
+channels:
+- conda-forge
+dependencies:
+- python=3.8
+- pip
+- fastapi
+- h11
+- ml_dtypes
+- uvicorn
+- numpy
+- scipy
+- attrs
+- psutil
+- shortuuid
+- tornado
+- clangdev
+- cloudpickle
+- decorator
+- tqdm

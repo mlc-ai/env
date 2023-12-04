@@ -2,7 +2,7 @@ name: ci-lint
 channels:
 - conda-forge
 dependencies:
-- python
+- python=3.8
 - black
 - isort
 - pylint
@@ -18,3 +18,4 @@ dependencies:
 - scipy
 - tornado
 - pytest
+- types-requests

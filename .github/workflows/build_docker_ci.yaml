@@ -10,6 +10,7 @@ jobs:
       matrix:
         platform:
           - cpu
+          - cu121
 
     runs-on: ubuntu-latest
     steps:
@@ -19,22 +20,28 @@ jobs:
         sudo rm -rf /usr/local/lib/android
         sudo rm -rf /opt/hostedtoolcache/CodeQL
         sudo rm -rf /usr/local/.ghcup
+        docker image prune --all -f
+        docker system prune -f
+        docker images -a
+        docker ps -a
         df -h
+
     - uses: actions/checkout@v3
+    - name: Show tags
+      run: |
+        TAG=$(git log -1 --format='%h')
+        echo "TAG=$TAG"
+
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.MLCAI_DOCKERHUB_USERNAME }}
         password: ${{ secrets.MLCAI_DOCKERHUB_TOKEN }}
-    - name: Build Docker image
+
+    - name: Build
       run: |
-        set -eux
-        cd docker
-        docker build -t ci-${{ matrix.platform }} -f Dockerfile.ci-${{ matrix.platform }} .
-    - name: Upload to Docker Hub
-      if: ${{ github.ref == 'refs/heads/main' }}
+        cd docker-ci && docker build --rm -t ci-${{ matrix.platform }} -f Dockerfile.${{ matrix.platform }} .
+
+    - name: Upload
       run: |
-        set -eux
-        NEW_TAG=$(git log -1 --format='%h')
-        docker tag ci-${{ matrix.platform }} mlcaidev/ci-${{ matrix.platform }}:$NEW_TAG
-        docker push mlcaidev/ci-${{ matrix.platform }}:$NEW_TAG
+        bash ./docker-ci/scripts/docker-push.sh ${{ matrix.platform }}
