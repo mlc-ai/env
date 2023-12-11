@@ -1,4 +1,4 @@
-name: Build Docker for packaging
+name: Build Docker for CD
 
 on:
   workflow_dispatch:
