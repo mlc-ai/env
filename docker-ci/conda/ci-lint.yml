@@ -18,4 +18,9 @@ dependencies:
 - scipy
 - tornado
 - pytest
+- shortuuid
+- tornado
+- uvicorn
+- fastapi
+- openai
 - types-requests
