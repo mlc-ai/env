@@ -8,4 +8,4 @@ ARG ROCM_VER
 
 # Install ROCm
 COPY install/rocm.sh /install/rocm.sh
-RUN bash /install/rocm.sh "5.7"
+RUN bash /install/rocm.sh $ROCM_VER

@@ -79,3 +79,10 @@ jobs:
     - name: ROCm 5.7 - Upload
       run: |
         bash ./docker-cd/scripts/docker-push.sh "rocm57"
+
+    - name: ROCm 6.0 - Build
+      run: |
+        cd docker-cd && docker build --rm --build-arg ROCM_VER="6.0" -t package-rocm60 -f Dockerfile.rocm .
+    - name: ROCm 6.0 - Upload
+      run: |
+        bash ./docker-cd/scripts/docker-push.sh "rocm60"
