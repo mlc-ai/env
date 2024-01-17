@@ -11,6 +11,7 @@ jobs:
         platform:
           - cpu
           - cu121
+          - rocm57
 
     runs-on: ubuntu-latest
     steps:
