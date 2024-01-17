@@ -1,0 +1,4 @@
+# syntax = edrevo/dockerfile-plus
+FROM rocm/dev-ubuntu-22.04:5.7-complete
+INCLUDE+ Dockerfile.base
+ENV PATH="${PATH}:/opt/rocm/llvm/bin/"
