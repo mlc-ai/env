@@ -1,3 +1,9 @@
 # syntax = edrevo/dockerfile-plus
 FROM ubuntu:22.04
 INCLUDE+ Dockerfile.base
+
+COPY install/wasm.sh /install/wasm.sh
+RUN bash /install/wasm.sh
+ENV EMSDK="/emsdk"
+ENV EMSDK_NODE="/emsdk/node/16.20.0_64bit/bin/node"
+ENV PATH="${PATH}:/emsdk/:/emsdk/upstream/emscripten:/emsdk/node/16.20.0_64bit/bin"
