@@ -6,4 +6,8 @@ COPY install/wasm.sh /install/wasm.sh
 RUN bash /install/wasm.sh
 ENV EMSDK="/emsdk"
 ENV EMSDK_NODE="/emsdk/node/16.20.0_64bit/bin/node"
-ENV PATH="${PATH}:/emsdk/:/emsdk/upstream/emscripten:/emsdk/node/16.20.0_64bit/bin"
+ENV PATH="/emsdk/:/emsdk/upstream/emscripten:/emsdk/node/16.20.0_64bit/bin:${PATH}"
+
+COPY install/android.sh /install/android.sh
+RUN bash /install/android.sh
+ENV PATH="/opt/android-sdk-linux/platform-tools:${PATH}"
